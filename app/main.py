@@ -18,10 +18,12 @@ class Ship:
         self.decks = []
 
         if self.start[0] == self.end[0]:
-            for i in range(self.start[1], self.end[1] + 1):
+            for i in range(min(self.start[1], self.end[1]),
+                           max(self.start[1], self.end[1]) + 1):
                 self.decks.append(Deck(self.start[0], i))
         elif self.start[1] == self.end[1]:
-            for i in range(self.start[0], self.end[0] + 1):
+            for i in range(min(self.start[0], self.end[0]),
+                           max(self.start[0], self.end[0]) + 1):
                 self.decks.append(Deck(i, self.start[1]))
 
     def get_deck(self, row: int, column: int) -> Optional[Deck]:
