@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Optional
 
 
 class Deck:
@@ -24,7 +24,7 @@ class Ship:
             for i in range(self.start[0], self.end[0] + 1):
                 self.decks.append(Deck(i, self.start[1]))
 
-    def get_deck(self, row: int, column: int) -> Any:
+    def get_deck(self, row: int, column: int) -> Optional[Deck]:
         for deck in self.decks:
             if deck.row == row and deck.column == column:
                 return deck
@@ -44,19 +44,17 @@ class Ship:
 
 class Battleship:
     def __init__(self, ships: list) -> None:
-        self.ships = ships
+        self.ships = []
         self.field = {}
-        list_of_ships = []
         for ship in ships:
             reference = Ship(ship[0], ship[1])
-            list_of_ships.append(reference)
-        for ship in list_of_ships:
+            self.ships.append(reference)
+        for ship in self.ships:
             for deck in ship.decks:
                 self.field[(deck.row, deck.column)] = ship
 
     def fire(self, location: tuple) -> str:
         if location in self.field:
             ship = self.field[location]
-            result = ship.fire(*location)
-            return result
+            return ship.fire(*location)
         return "Miss!"
